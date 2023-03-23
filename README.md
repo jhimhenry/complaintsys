@@ -1,9 +1,11 @@
-# complaintsys
+# Complaint System
+
 Complaint and query system for students at UTECH, Jamaica
 
-##Group Members
+## Group Members
+
 Jovaughn Bennett
-Ntini Edwards
+Ntini Edwards - 1904701 
 Jhimani Henry
 Kariem
 
