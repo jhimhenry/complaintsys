@@ -7,6 +7,11 @@ Ntini Edwards
 Jhimani Henry
 Kariem
 
+##Milestones
+1. 
+2. 
+3. 
+4.  
 ##User Manual - Student Services Employee
 1. A student services employee is either an advisor or supervisor
 
