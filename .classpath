@@ -2,5 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path=""/>
+	<classpathentry kind="lib" path="C:/Users/jovau/eclipse-workspace/hibernate-release-5.4.20.Final/lib/required/hibernate-core-5.4.20.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jovau/eclipse-workspace/hibernate-release-5.4.20.Final/lib/required/javax.persistence-api-2.2.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
