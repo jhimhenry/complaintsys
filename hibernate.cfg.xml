@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC 
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"> 
+<hibernate-configuration>
+	<session-factory>
+		<!-- JDBC database conection settings -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url"></property> <!--add necessary url -->
+		<property name="connection.username">root</property>
+		<property name="connection.password"></property>
+
+		<!-- JDBC connection pool settings -->
+		<property name="connection.pool_size">1</property>
+		
+		<!-- Choose tbe hibernate dialect for the specific database type -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+		<!-- Echo out to the console -->
+		<property name="hibernate.show_sql">true</property>
+
+		<property name="currents_session_context_class">thread</property>
+	</session-factory>
+</hibernate-configuration>
