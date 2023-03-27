@@ -7,7 +7,7 @@ Complaint and query system for students at UTECH, Jamaica
 Jovaughn Bennett - 1603714
 Ntini Edwards - 1904701 
 Jhimani Henry
-Kariem
+Kevon K Clarke
 
 ## Milestones
 1. 
