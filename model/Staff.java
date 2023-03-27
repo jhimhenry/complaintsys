@@ -1,12 +1,34 @@
-/**Implemented by Ntini Edwards
+/*/**Implemented by Ntini Edwards
  * ID: 1904701*/
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.annotations.Entity;
+
+import factories.SessionFactoryBuilder;
+
+
+import javax.persistence.*;
+import javax.persistence.Table;
+import java.util.*;
+import org.hibernate.Session;
+
+@Entity 
+@Table(name="Staff")
+
 
 public class Staff implements Serializable{
+	@ID
+	@Column(name="ID")
 	private String staffId;
+	@Column(name="Password")
 	private String staffPw;
+	@Column (name="Postion")
 	private String position;
 	
 	//default constructor
@@ -54,6 +76,55 @@ public class Staff implements Serializable{
 	public void setPosition(String position) {
 		this.position = position;
 	}
+	
+	
+	public void update() {
+		Session session =
+				SessionFactoryBuilder 
+				.getSessionFactory()
+				.getCurrentSession();
+		
+		Transaction transaction =session.beginTransaction();
+		Staff staff=(Staff)session.get(Staff.class,this.staffId);
+		staff.setPosition(position);
+		staff.setStaffPw(staffPw);
+		session.update(staff);
+		transaction.commit();
+		session.close();
+		
+		 @SuppressWarnings("unchecked")
+			public List<Staff> readAll()
+			 {
+				 List<Staff> staffList = new ArrayList<>();
+				 Session session = 
+						 SessionFactoryBuilder
+						 .getSessionFactory()
+						 .getCurrentSession();
+				 Transaction transaction = session.beginTransaction();
+				 staffList = (List<Staff>) session.createQuery("FROM Staff")
+						 .getResultList();
+				 transaction.commit();
+				 session.close();
+				 
+				 return staffList;
+			 }
+			 public void delete()
+			 {
+				 Session session = 
+						 SessionFactoryBuilder
+						 .getSessionFactory()
+						 .getCurrentSession();
+				 Transaction transaction = session.beginTransaction();
+				 Staff staff= (Staff) session.get(Staff.class,this.staffId);
+				 session.delete(staff);
+				 transaction.commit();
+				 session.close();
+			 } 
+	
+	
+	
+	
+	
 	
 	//toString method
 	@Override
