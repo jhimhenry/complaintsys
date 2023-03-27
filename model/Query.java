@@ -3,13 +3,31 @@
 package model;
 
 import java.io.Serializable;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+//import org.hibernate.annotations.Entity;
+
+import factories.SessionFactoryBuilder;
+import model.Student;
+
+import javax.persistence.*;
+import javax.persistence.Table;
+import java.util.*;
+import org.hibernate.Session;
+
+@Table(name="Query")
 
 public class Query implements Serializable{
+	@Column (name="QueryType")
 	private String queryType;
+	@Column (name="QueryDetails")
 	private String queryDetails;
+	@Column(name="QueryResolved")
 	private boolean queryResolved; //may be included in relationship, still working on this
 	//private Date queryResDate; //date class to be created d/m/y or import date
+	@Column(name="QueryResDate")
 	private String queryResDate;//may be in relationship
+	@Column(name="QueryResponser")
 	private String queryResponder;//to be modified, should take staff id
 	 
 	//default constructor
@@ -90,6 +108,68 @@ public class Query implements Serializable{
 				+ "\nDate Resolved: " + queryResDate 
 				+ "\nResponder: " + queryResponder + "\n****************************\n";
 	}
+
+	public void create()
+	{
+		Session session = 
+				SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		
+		Transaction transaction = session.beginTransaction();
+		session.save(this);
+		transaction.commit();
+		session.close();
+	}
+	
+	public void update()
+	{
+		Session session = 
+				SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		
+		Transaction transaction = session.beginTransaction();
+		Query query= (Query) session.get(Query.class, this.queryType);
+
+		query.setQueryDetails(this.queryDetails);
+		query.setQueryResDate(this.queryResDate);
+		query.setQueryResolved(this.queryResolved);
+		query.setQueryResponder(this.queryResponder);
+	
+		session.update(query);
+		transaction.commit();
+		session.close();
+	}
+	
+	@SuppressWarnings("unchecked")
+   public List<Query> readAll()
+	{
+		List<Query> queryList = new ArrayList<>();
+		Session session = 
+				SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		queryList = (List<Query>) session.createQuery("FROM Query")
+				.getResultList();
+		transaction.commit();
+		session.close();
+		
+		return queryList;
+	}
+/* 	public void delete()
+	{
+		Session session = 
+				SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		Query query = (Query) session.get(Query.class,this.QueryId);
+		session.delete(stu);
+		transaction.commit();
+		session.close();
+	} */
 
 	public static void main(String[] args) {
 		Query q = new Query("Lost Id", "Fell at the spin gate", true, "March 1, 2023",
