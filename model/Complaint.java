@@ -3,13 +3,32 @@
 package model;
 
 import java.io.Serializable;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+//import org.hibernate.annotations.Entity;
+
+import factories.SessionFactoryBuilder;
+import model.Student;
+
+import javax.persistence.*;
+import javax.persistence.Table;
+import java.util.*;
+import org.hibernate.Session;
+
+//@Entity
+@Table (name="Complaint")
 
 public class Complaint implements Serializable{
+	@Column (name="CompType")
 	private String compType;
+	@Column (name="CompDetails")
 	private String compDetails;
+	@Column (name="CompResolved")
 	private boolean compResolved; //may be included in relationship, still working on this
+	@Column(name="CompResDate")
 	//private Date queryResDate; //date class to be created d/m/y or import date
 	private String compResDate;//may be in relationship
+	@Column(name="CompResponder")
 	private String compResponder;//to be modified, should take staff id
 	
 	//default constructor
@@ -80,6 +99,68 @@ public class Complaint implements Serializable{
 				+ "\nDate Resolved: " + compResDate 
 				+ "\nResponder: " + compResponder + "\n**************************\n";
 	}
+	public void create()
+	{
+		Session session = 
+				SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		
+		Transaction transaction = session.beginTransaction();
+		session.save(this);
+		transaction.commit();
+		session.close();
+	}
+	
+	public void update()
+	{
+		Session session = 
+				SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		
+		Transaction transaction = session.beginTransaction();
+		Complaint complaint = (Complaint) session.get(Complaint.class, this.co);
+
+     complaint.setCompDetails(this.compDetails);
+	 complaint.setCompResDate(this.compResDate);
+	 complaint.setCompResolved(this.compResolved);
+	 complaint.setCompResponder(this.compResponder);
+
+		
+		session.update(complaint);
+		transaction.commit();
+		session.close();
+	}
+	
+	@SuppressWarnings("unchecked")
+   public List<Complaint> readAll()
+	{
+		List<Complaint> complaintList = new ArrayList<>();
+		Session session = 
+				SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		complaintList = (List<Complaint>) session.createQuery("FROM Complaint")
+				.getResultList();
+		transaction.commit();
+		session.close();
+		
+		return complaintList;
+	}
+	public void delete()
+	{
+		Session session = 
+				SessionFactoryBuilder
+				.getSessionFactory()
+				.getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		Student stu = (Complaint) session.get(Complaint.class,this.//studentId);
+		session.delete(stu);
+		transaction.commit();
+		session.close();
+	} 
 	
 	public static void main(String[] args) {
 		Complaint c = new Complaint("Blank timetable", "I see nothing", true, "March 4, 2023", "789624");
