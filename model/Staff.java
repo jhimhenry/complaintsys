@@ -14,7 +14,7 @@ import factories.SessionFactoryBuilder;
 
 
 import javax.persistence.*;
-import javax.persistence.Table;
+
 import java.util.*;
 import org.hibernate.Session;
 
@@ -23,7 +23,7 @@ import org.hibernate.Session;
 
 
 public class Staff implements Serializable{
-	@ID
+	@Id
 	@Column(name="ID")
 	private String staffId;
 	@Column(name="Password")
@@ -91,7 +91,7 @@ public class Staff implements Serializable{
 		session.update(staff);
 		transaction.commit();
 		session.close();
-		
+	}
 		 @SuppressWarnings("unchecked")
 			public List<Staff> readAll()
 			 {
