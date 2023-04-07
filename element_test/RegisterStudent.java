@@ -6,13 +6,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 //import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class RegisterStudent extends JFrame implements ActionListener{
+public class RegisterStudent extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
-	private JButton saveButton;
 	private JLabel label;
 	private JTextField IDTF;
 	private JTextField firstNameTF;
@@ -24,28 +23,26 @@ public class RegisterStudent extends JFrame implements ActionListener{
 	//default constructor creates and 
 	public RegisterStudent() {
 		
-		setTitle("Complaint System Login");//JFrame title
+		setName("Complaint System Student Registration");
 		
 		//Create and add form fields
 		createID();		
-		createFName();		
-		createLName();		
+		createName();		
 		createContact();		
 		createEmail();		
-		createPassword();		
-		createButton();
+		createPassword();
 		
 		//Setting frame properties
 		setSize(500,500);
 		setLayout(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 
-	private void createButton() {
-		saveButton = new JButton("Save");
-		saveButton.setBounds(200,300,90,40);
-		add(saveButton);
+	JButton createButton(JButton regButton) {
+		regButton = new JButton("Save");
+		regButton.setBounds(200,300,90,40);
+		add(regButton);
+		return regButton;
 	}
 
 	//Getter and setter for label	
@@ -66,15 +63,12 @@ public class RegisterStudent extends JFrame implements ActionListener{
 		add(IDTF);
 	}
 		
-	private void createFName() {
+	private void createName() {
 		setLabel(label,"First Name: ",50,80,250,20);
 		firstNameTF = new JTextField();
 		firstNameTF.setBounds(180,80,150,25);
 		add(getLabel());
 		add(firstNameTF);
-	}
-		
-	private void createLName() {
 		setLabel(label,"Last Name: ",50,110,250,20);
 		lastNameTF = new JTextField();
 		lastNameTF.setBounds(180,110,150,25);
@@ -144,7 +138,7 @@ public class RegisterStudent extends JFrame implements ActionListener{
 	}*/
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		System.out.println("Some action was done");
 		
 	}
 	

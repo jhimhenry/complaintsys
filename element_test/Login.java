@@ -1,53 +1,63 @@
 package com.element_test;
 
-import java.awt.Component;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-//will be changed to JPanel to enable card layout
-public class Login extends JFrame{
+public class Login extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private JLabel label;
 	private JTextField IDTF;
 	private JTextField password;
 	private JRadioButton staff;
 	private JRadioButton student;
-	private JButton logButton;
-	
 	
 	public Login() {
-		setTitle("Complaint System Login");//JFrame title
+		setName("Complaint System Login");//JFrame title
 		
 		//Create and add form fields
 		createID();		
 		createPassword();
 		createCategory();
-		createButton();
 		
 		//Setting frame properties
 		setSize(500,500);
 		setLayout(null);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	private void createButton() {
+	JButton createButton(JButton logButton) {
 		logButton = new JButton("Login");
 		logButton.setBounds(200,190,90,40);
 		add(logButton);
+		return logButton;
+	}
+	
+	//Getters and Setters
+	public JRadioButton getStaff() {
+		return staff;
 	}
 
-	//Getter and setter for label	
+	public void setStaff(JRadioButton staff) {
+		this.staff = staff;
+	}
+
+	public JRadioButton getStudent() {
+		return student;
+	}
+
+	public void setStudent(JRadioButton student) {
+		this.student = student;
+	}
+
 	public JLabel getLabel() {
 		return label;
 	}
 
-	public void setLabel(JLabel label,String labelText, int x, int y, int w, int h) {
+	public void setLabel(JLabel label,String labelText, int x, int y, int w, int h){
 		this.label = new JLabel(labelText);
 		this.label.setBounds(x, y, w, h);		
 	}
@@ -84,8 +94,8 @@ public class Login extends JFrame{
 	}
 	
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		new Login();
-	}
+	}*/
 
 }

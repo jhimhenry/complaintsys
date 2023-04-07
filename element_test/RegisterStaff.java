@@ -2,14 +2,13 @@ package com.element_test;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-//TODO change inheritance to JPanel for card layout
-public class RegisterStaff extends JFrame{
-	private JButton regButton;
+public class RegisterStaff extends JPanel{
+	private static final long serialVersionUID = 1L;
 	private JLabel label;
 	private JTextField IDTF;
 	private JTextField firstNameTF;
@@ -19,28 +18,25 @@ public class RegisterStaff extends JFrame{
 	private JTextField passwordTF;
 	
 	public RegisterStaff() {
-		setTitle("Complaint System Registration");//JFrame title
+		setName("Complaint System Registration");//JFrame title
 		
 		//Create and add form fields
 		createID();		
-		createFName();		
-		createLName();		
+		createName();		
 		createPosition();	
-		createPassword();		
-		createButton();
+		createPassword();
 		
 		//Setting frame properties
 		setSize(500,500);
 		setLayout(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-		
 	}
 	
-	private void createButton() {
-		regButton = new JButton("Save");
+	JButton createButton(JButton regButton) {
+		regButton = new JButton("Register");
 		regButton.setBounds(200,300,90,40);
 		add(regButton);
+		return regButton;
 	}
 
 	//Getter and setter for label	
@@ -61,15 +57,12 @@ public class RegisterStaff extends JFrame{
 		add(IDTF);
 	}
 		
-	private void createFName() {
+	private void createName() {
 		setLabel(label,"First Name: ",50,80,250,20);
 		firstNameTF = new JTextField();
 		firstNameTF.setBounds(180,80,150,25);
 		add(getLabel());
 		add(firstNameTF);
-	}
-		
-	private void createLName() {
 		setLabel(label,"Last Name: ",50,110,250,20);
 		lastNameTF = new JTextField();
 		lastNameTF.setBounds(180,110,150,25);
@@ -106,12 +99,9 @@ public class RegisterStaff extends JFrame{
 		add(passwordTF);			
 	}
 
-	
-
-
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		new RegisterStaff();
 
-	}
+	}*/
 
 }
