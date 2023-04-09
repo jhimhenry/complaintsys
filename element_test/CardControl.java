@@ -6,7 +6,6 @@ package com.element_test;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -21,21 +20,59 @@ public class CardControl extends JFrame{
 	private RegisterStudent registerStudentPanel = new RegisterStudent();
 	private RegisterStaff registerStaffPanel = new RegisterStaff();
 	private StudentDashboard studentDashboardPanel = new StudentDashboard();
-	private StaffDashboard staffDashboardPanel = new StaffDashboard();
+	private SupervisorDashboard supDashboardPanel = new SupervisorDashboard();
+	private AdvisorDashboard advDashboardPanel = new AdvisorDashboard();
 	
 	//buttons to control switching among panels
 	private JButton loginButton = new JButton();
 	private JButton registerStudButton = new JButton();
 	private JButton registerStaffButton = new JButton();
-	private JButton logoutButton = new JButton("Logout");
+	private JButton logoutStudButton = new JButton("Logout");
+	private JButton logoutAdvButton =new JButton("Logout");
+	private JButton logoutSupButton =new JButton("Logout");
 	
+	private JButton addComplaint = new JButton();
+	private JButton addQuery = new JButton();
+	private JButton viewComplaint = new JButton();
+	private JButton viewQuery = new JButton();
+	private JButton searchQuery = new JButton();
+	private JButton searchComplaint = new JButton();
+	private JButton assignComp = new JButton();
+	private JButton viewStudComplaint;
+	private JButton viewStudQuery;
+	private JButton viewAssComp;
+	private JButton viewAssQ;
+	
+	//add buttons to control the operations of the program
 	public void initButtons() {
+		//Login Screen button
 		loginButton = loginPanel.createButton(loginButton);
+		
+		//Registration screen buttons
 		registerStudButton = registerStudentPanel.createButton(registerStudButton);
 		registerStaffButton = registerStaffPanel.createButton(registerStaffButton);
-		studentDashboardPanel.add(logoutButton);
-		staffDashboardPanel.add(logoutButton);
+		
+		//Student Dashboard Buttons
+		addComplaint = studentDashboardPanel.createButton(addComplaint, "New Complaint",200,200,200,45);
+		addQuery = studentDashboardPanel.createButton(addQuery, "New Query", 200,250,200,45);
+		viewComplaint = studentDashboardPanel.createButton(viewComplaint, "View Past Complaints", 200,300,200,45);
+		viewQuery = studentDashboardPanel.createButton(viewQuery, "View Past Queries", 200,350,200,45);
+		searchQuery = studentDashboardPanel.createButton(searchQuery, "Find Query", 200,400,200,45);
+		searchComplaint = studentDashboardPanel.createButton(searchComplaint, "Find Complaint", 200,450,200,45);
+		logoutStudButton = studentDashboardPanel.createButton(logoutStudButton, "Logout", 200,500,200,45);
+		
+		//Supervisor Dashboard buttons
+		assignComp  = supDashboardPanel.createButton(assignComp, "Assign Complaint", 200,200,200,45);//an update operation
+		viewStudComplaint = supDashboardPanel.createButton(viewStudComplaint, "View Past Complaints", 200,250,200,45);
+		viewStudQuery = supDashboardPanel.createButton(viewStudQuery, "View Past Queries", 200,300,200,45);
+		logoutSupButton = supDashboardPanel.createButton(logoutSupButton, "Logout", 200,350,200,45);
+		
+		//Advisor Dashboard Buttons
+		viewAssComp = advDashboardPanel.createButton(viewAssComp, "Assigned Complaints",200,200,200,45);
+		viewAssQ = advDashboardPanel.createButton(viewAssQ, "Assigned Queries",200,250,200,45);
+		logoutAdvButton = advDashboardPanel.createButton(logoutAdvButton, "Logout", 200,500,200,45);
 	}
+	
 	public CardControl() {
 		//initialise buttons to control navigation
 		initButtons();
@@ -44,7 +81,7 @@ public class CardControl extends JFrame{
 		
 		//set card layout for parent panel
 		parentPanel.setLayout(layout);
-		parentPanel.setSize(700, 700);	
+		parentPanel.setSize(900, 900);	
 		
 		//action listeners on buttons allow changing visible panel
 		loginButton.addActionListener(new ActionListener() {
@@ -60,6 +97,7 @@ public class CardControl extends JFrame{
 				 * if credentials do not exist and staff is selected, redirect to 3*/
 	
 				if(loginPanel.getStaff().isSelected()) {
+					//check staff category in database
 					JOptionPane.showMessageDialog(null, "Staff Login Successful","Login Status", JOptionPane.INFORMATION_MESSAGE);
 					layout.show(parentPanel, "5");						
 				}
@@ -84,35 +122,74 @@ public class CardControl extends JFrame{
 				layout.show(parentPanel, "1");				
 			}			
 		});
-		registerStudentPanel.add(registerStudButton);   
+		registerStudentPanel.add(registerStudButton);  		
 		
-		
-		/*registerStaffButton.addActionListener(new ActionListener() {				
+		registerStaffButton.addActionListener(new ActionListener() {				
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//TODO for staff registration
 				/**insert code to check if credentials were successfully added to staff table
 				 * if credentials were added proceed to login
 				 * if not try again*/
-				/*JOptionPane.showMessageDialog(null, "Details added successfully","Registration Status", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Details added successfully","Registration Status", JOptionPane.INFORMATION_MESSAGE);
 				layout.show(parentPanel, "1");				
 			}			
-		});*/
+		});
+		registerStaffPanel.add(registerStaffButton);
 		
-		/*logoutButton.addActionListener(new ActionListener () {
+		//Logout of different pages
+		logoutStudButton.addActionListener(new ActionListener () {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null,"Are you certain you wish to logout?","Confirm Logout", JOptionPane.INFORMATION_MESSAGE);
-				layout.show(parentPanel, "1");
+				int opt = JOptionPane.showConfirmDialog(null,"Are you certain you wish to logout?","Confirm Logout", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+				
+				//confirm logout
+				if (opt == JOptionPane.YES_OPTION) {
+					layout.show(parentPanel, "1");
+				}else if(opt == JOptionPane.NO_OPTION) {
+					layout.show(parentPanel, getName());
+				}//end elif					
 			}			
-		});*/
+		});
+		studentDashboardPanel.add(logoutStudButton);
+		
+		logoutSupButton.addActionListener(new ActionListener () {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int opt = JOptionPane.showConfirmDialog(null,"Are you certain you wish to logout?","Confirm Logout", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+				
+				//confirm logout
+				if (opt == JOptionPane.YES_OPTION) {
+					layout.show(parentPanel, "1");
+				}else if(opt == JOptionPane.NO_OPTION) {
+					layout.show(parentPanel, getName());
+				}//end elif					
+			}			
+		});
+		supDashboardPanel.add(logoutSupButton);
+		
+		logoutAdvButton.addActionListener(new ActionListener () {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int opt = JOptionPane.showConfirmDialog(null,"Are you certain you wish to logout?","Confirm Logout", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+				
+				//confirm logout
+				if (opt == JOptionPane.YES_OPTION) {
+					layout.show(parentPanel, "1");
+				}else if(opt == JOptionPane.NO_OPTION) {
+					layout.show(parentPanel, getName());
+				}//end elif					
+			}			
+		});
+		advDashboardPanel.add(logoutAdvButton);
 		
 		//add content panels to container panel
 		parentPanel.add(loginPanel, "1");
 		parentPanel.add(registerStudentPanel, "2");
 		parentPanel.add(registerStaffPanel, "3");
 		parentPanel.add(studentDashboardPanel, "4");
-		parentPanel.add(staffDashboardPanel, "5");
+		parentPanel.add(supDashboardPanel, "5");
+		parentPanel.add(advDashboardPanel, "6");
 		
 		//determines which panel is visible first
 		layout.show(parentPanel, "1");
