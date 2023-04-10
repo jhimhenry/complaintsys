@@ -12,7 +12,8 @@ public class Login extends JPanel{
 	private JLabel label;
 	private JTextField IDTF;
 	private JTextField password;
-	private JRadioButton staff;
+	private JRadioButton supervisor;
+	private JRadioButton advisor;
 	private JRadioButton student;
 	
 	public Login() {
@@ -31,18 +32,26 @@ public class Login extends JPanel{
 	
 	JButton createButton(JButton logButton) {
 		logButton = new JButton("Login");
-		logButton.setBounds(200,190,90,40);
+		logButton.setBounds(350,200,90,40);
 		add(logButton);
 		return logButton;
 	}
 	
 	//Getters and Setters
-	public JRadioButton getStaff() {
-		return staff;
+	public JRadioButton getSupervisor() {
+		return supervisor;
 	}
 
-	public void setStaff(JRadioButton staff) {
-		this.staff = staff;
+	public void setSupervisor(JRadioButton staff) {
+		this.supervisor = staff;
+	}
+	
+	public JRadioButton getAdvisor() {
+		return advisor;
+	}
+
+	public void setAdvisor(JRadioButton staff) {
+		this.advisor = staff;
 	}
 
 	public JRadioButton getStudent() {
@@ -63,18 +72,18 @@ public class Login extends JPanel{
 	}
 	
 	private void createID() {
-		setLabel(label,"ID: ",50,50,250,20);
-		IDTF = new JTextField();
-		IDTF.setBounds(180,50,150,25);
+		setLabel(label,"ID: ",280,50,250,20);
+		setIDTF(new JTextField());
+		getIDTF().setBounds(350,50,150,25);
 		add(getLabel());
-		add(IDTF);
+		add(getIDTF());
 	}
 	
 	//add event listener to hide password input
 	private void createPassword() {
-		setLabel(label,"Password: ",50,80,250,20);
+		setLabel(label,"Password: ",280,80,250,20);
 		password = new JTextField();
-		password.setBounds(180,80,150,25);
+		password.setBounds(350,80,150,25);
 		add(getLabel());
 		add(password);			
 	}
@@ -82,15 +91,27 @@ public class Login extends JPanel{
 	private void createCategory() {
 		ButtonGroup group = new ButtonGroup();//group to add radio buttons
 		
-		staff = new JRadioButton("Staff");
+		supervisor = new JRadioButton("Supervisor");
+		advisor = new JRadioButton("Advisor");
 		student = new JRadioButton("Student");
-		staff.setBounds(180,110,150,25);
-		student.setBounds(180,140,150,25);
+		supervisor.setBounds(370,110,150,25);
+		advisor.setBounds(370,140,150,25);
+		student.setBounds(370,170,150,25);
 		
-		group.add(staff);
+		group.add(supervisor);
+		group.add(advisor);
 		group.add(student);
-		add(staff);
+		add(advisor);
+		add(supervisor);
 		add(student);		
+	}
+
+	public JTextField getIDTF() {
+		return IDTF;
+	}
+
+	public void setIDTF(JTextField iDTF) {
+		IDTF = iDTF;
 	}
 	
 

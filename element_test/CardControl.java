@@ -2,6 +2,10 @@
  * Card layout is used to switch between displays
  * Used to allow user to register/login and access dashboard*/
 package com.element_test;
+import model.Student;
+import model.Staff;
+import model.Complaint;
+import model.Query;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
@@ -38,10 +42,10 @@ public class CardControl extends JFrame{
 	private JButton searchQuery = new JButton();
 	private JButton searchComplaint = new JButton();
 	private JButton assignComp = new JButton();
-	private JButton viewStudComplaint;
-	private JButton viewStudQuery;
-	private JButton viewAssComp;
-	private JButton viewAssQ;
+	private JButton viewStudComplaint = new JButton();
+	private JButton viewStudQuery = new JButton();
+	private JButton viewAssComp = new JButton();
+	private JButton viewAssQ = new JButton();
 	
 	//add buttons to control the operations of the program
 	public void initButtons() {
@@ -53,24 +57,24 @@ public class CardControl extends JFrame{
 		registerStaffButton = registerStaffPanel.createButton(registerStaffButton);
 		
 		//Student Dashboard Buttons
-		addComplaint = studentDashboardPanel.createButton(addComplaint, "New Complaint",200,200,200,45);
-		addQuery = studentDashboardPanel.createButton(addQuery, "New Query", 200,250,200,45);
-		viewComplaint = studentDashboardPanel.createButton(viewComplaint, "View Past Complaints", 200,300,200,45);
-		viewQuery = studentDashboardPanel.createButton(viewQuery, "View Past Queries", 200,350,200,45);
-		searchQuery = studentDashboardPanel.createButton(searchQuery, "Find Query", 200,400,200,45);
-		searchComplaint = studentDashboardPanel.createButton(searchComplaint, "Find Complaint", 200,450,200,45);
-		logoutStudButton = studentDashboardPanel.createButton(logoutStudButton, "Logout", 200,500,200,45);
+		addComplaint = studentDashboardPanel.createButton(addComplaint, "New Complaint",350,200,200,45);
+		addQuery = studentDashboardPanel.createButton(addQuery, "New Query", 350,250,200,45);
+		viewComplaint = studentDashboardPanel.createButton(viewComplaint, "View Past Complaints", 350,300,200,45);
+		viewQuery = studentDashboardPanel.createButton(viewQuery, "View Past Queries", 350,350,200,45);
+		searchQuery = studentDashboardPanel.createButton(searchQuery, "Find Query", 350,400,200,45);
+		searchComplaint = studentDashboardPanel.createButton(searchComplaint, "Find Complaint", 350,450,200,45);
+		logoutStudButton = studentDashboardPanel.createButton(logoutStudButton, "Logout", 350,500,200,45);
 		
 		//Supervisor Dashboard buttons
-		assignComp  = supDashboardPanel.createButton(assignComp, "Assign Complaint", 200,200,200,45);//an update operation
-		viewStudComplaint = supDashboardPanel.createButton(viewStudComplaint, "View Past Complaints", 200,250,200,45);
-		viewStudQuery = supDashboardPanel.createButton(viewStudQuery, "View Past Queries", 200,300,200,45);
-		logoutSupButton = supDashboardPanel.createButton(logoutSupButton, "Logout", 200,350,200,45);
+		assignComp  = supDashboardPanel.createButton(assignComp, "Assign Complaint", 350,200,200,45);//an update operation
+		viewStudComplaint = supDashboardPanel.createButton(viewStudComplaint, "View Past Complaints", 350,250,200,45);
+		viewStudQuery = supDashboardPanel.createButton(viewStudQuery, "View Past Queries", 350,300,200,45);
+		logoutSupButton = supDashboardPanel.createButton(logoutSupButton, "Logout", 350,350,200,45);
 		
 		//Advisor Dashboard Buttons
-		viewAssComp = advDashboardPanel.createButton(viewAssComp, "Assigned Complaints",200,200,200,45);
-		viewAssQ = advDashboardPanel.createButton(viewAssQ, "Assigned Queries",200,250,200,45);
-		logoutAdvButton = advDashboardPanel.createButton(logoutAdvButton, "Logout", 200,500,200,45);
+		viewAssComp = advDashboardPanel.createButton(viewAssComp, "Assigned Complaints",350,200,200,45);
+		viewAssQ = advDashboardPanel.createButton(viewAssQ, "Assigned Queries",350,250,200,45);
+		logoutAdvButton = advDashboardPanel.createButton(logoutAdvButton, "Logout", 350,300,200,45);
 	}
 	
 	public CardControl() {
@@ -87,6 +91,31 @@ public class CardControl extends JFrame{
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (loginPanel.getIDTF() != null) {
+					if(loginPanel.getSupervisor().isSelected()) {
+						//is this id in the database, is this person a supervisor
+						JOptionPane.showMessageDialog(null, "Staff Login Successful","Login Status", JOptionPane.INFORMATION_MESSAGE);
+						layout.show(parentPanel, "5");
+						
+						//if false redirect to login
+					}
+					if(loginPanel.getAdvisor().isSelected()) {
+						//is this id in the database, is this person an advisor
+						JOptionPane.showMessageDialog(null, "Staff Login Successful","Login Status", JOptionPane.INFORMATION_MESSAGE);
+						layout.show(parentPanel, "6");			
+						
+						//if false redirect to login
+					}
+					if(loginPanel.getStudent().isSelected()){
+						//is it in student database
+						JOptionPane.showMessageDialog(null, "Student Login Successful","Login Status", JOptionPane.INFORMATION_MESSAGE);
+						layout.show(parentPanel, "4");
+						
+						//if false redirect to login
+					}
+					
+				}					
+			
 				//TODO to complete login
 				/**insert code to check if credentials exist
 				 * if credentials exist, check if credentials are correct
@@ -94,17 +123,8 @@ public class CardControl extends JFrame{
 				 * if correct and student is selected, proceed to 4
 				 * if incorrect clear 1, allow 3 tries
 				 * if credentials do not exist and student is selected, redirect to 2
-				 * if credentials do not exist and staff is selected, redirect to 3*/
-	
-				if(loginPanel.getStaff().isSelected()) {
-					//check staff category in database
-					JOptionPane.showMessageDialog(null, "Staff Login Successful","Login Status", JOptionPane.INFORMATION_MESSAGE);
-					layout.show(parentPanel, "5");						
-				}
-				if(loginPanel.getStudent().isSelected()){
-					JOptionPane.showMessageDialog(null, "Student Login Successful","Login Status", JOptionPane.INFORMATION_MESSAGE);
-					layout.show(parentPanel, "4");					
-				}							
+				 * if credentials do not exist and staff is selected, redirect to 3*/	    
+											
 			}			
 		});
 		//add button to relevant panel
