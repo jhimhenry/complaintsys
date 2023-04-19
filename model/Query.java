@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 //import org.hibernate.annotations.Entity;
 
+import com.sun.istack.internal.logging.Logger;
+
 import factories.SessionFactoryBuilder;
 import model.Student;
 
@@ -29,6 +31,8 @@ public class Query implements Serializable{
 	private String queryResDate;//may be in relationship
 	@Column(name="QueryResponser")
 	private String queryResponder;//to be modified, should take staff id
+	
+	public static final Logger log = Logger.getLogger(Query.class);
 	 
 	//default constructor
 	public Query() {
@@ -119,6 +123,7 @@ public class Query implements Serializable{
 		Transaction transaction = session.beginTransaction();
 		session.save(this);
 		transaction.commit();
+		log.info("Lodging a query");
 		session.close();
 	}
 	
@@ -139,6 +144,7 @@ public class Query implements Serializable{
 	
 		session.update(query);
 		transaction.commit();
+		log.info("Updating a query");
 		session.close();
 	}
 	
@@ -154,6 +160,7 @@ public class Query implements Serializable{
 		queryList = (List<Query>) session.createQuery("FROM Query")
 				.getResultList();
 		transaction.commit();
+		log.info("Listing queries");
 		session.close();
 		
 		return queryList;
@@ -168,6 +175,7 @@ public class Query implements Serializable{
 		Query query = (Query) session.get(Query.class,this.QueryId);
 		session.delete(stu);
 		transaction.commit();
+		log.info("Deleting a query");
 		session.close();
 	} */
 

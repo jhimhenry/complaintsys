@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 //import org.hibernate.annotations.Entity;
 
+import com.sun.istack.internal.logging.Logger;
+
 import factories.SessionFactoryBuilder;
 import model.Student;
 
@@ -30,6 +32,8 @@ public class Complaint implements Serializable{
 	private String compResDate;//may be in relationship
 	@Column(name="CompResponder")
 	private String compResponder;//to be modified, should take staff id
+	
+	public static final Logger log = Logger.getLogger(Complaint.class);
 	
 	//default constructor
 	public Complaint() {
@@ -109,6 +113,7 @@ public class Complaint implements Serializable{
 		Transaction transaction = session.beginTransaction();
 		session.save(this);
 		transaction.commit();
+		log.info("Lodging a complaint");
 		session.close();
 	}
 	
@@ -130,6 +135,7 @@ public class Complaint implements Serializable{
 		
 		session.update(complaint);
 		transaction.commit();
+		log.info("Updating a complaint");
 		session.close();
 	}
 	
@@ -144,6 +150,7 @@ public class Complaint implements Serializable{
 		Transaction transaction = session.beginTransaction();
 		complaintList = (List<Complaint>) session.createQuery("FROM Complaint")
 				.getResultList();
+		log.info("Listing complaints");
 		transaction.commit();
 		session.close();
 		
@@ -158,6 +165,7 @@ public class Complaint implements Serializable{
 		Transaction transaction = session.beginTransaction();
 		Student stu = (Complaint) session.get(Complaint.class,this.//studentId);
 		session.delete(stu);
+		log.info("Deleting a complaint");
 		transaction.commit();
 		session.close();
 	} 
