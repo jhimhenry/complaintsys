@@ -1,4 +1,4 @@
-package com.element_test;
+package element_test;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;

@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 //import org.hibernate.annotations.Entity;
 
+import com.sun.istack.internal.logging.Logger;
+
 import factories.SessionFactoryBuilder;
 import model.Student;
 
@@ -31,6 +33,8 @@ public class Student implements Serializable{
 	private String studentContact;
 	@Column(name="Passowrd")
 	private String studentPw;
+	
+	public static final Logger log = Logger.getLogger(Student.class);
 	
 	//default constructor
 	public Student() {
@@ -150,6 +154,7 @@ public class Student implements Serializable{
 		 Transaction transaction = session.beginTransaction();
 		 session.save(this);
 		 transaction.commit();
+		 log.info("Creating a student");
 		 session.close();
 	 }
 	 
@@ -168,7 +173,9 @@ public class Student implements Serializable{
 		 stu.setStudentContact(this.studentContact);
 		 session.update(stu);
 		 transaction.commit();
+		 log.info("Updating student with ID:" +this.studentId);
 		 session.close();
+		 log.info("Student info has been updated");
 	 }
 	 
 	 @SuppressWarnings("unchecked")
@@ -183,6 +190,7 @@ public class Student implements Serializable{
 		 studentList = (List<Student>) session.createQuery("FROM Student")
 				 .getResultList();
 		 transaction.commit();
+		 log.info("Reading from a list of students");
 		 session.close();
 		 
 		 return studentList;
@@ -197,7 +205,9 @@ public class Student implements Serializable{
 		 Student stu = (Student) session.get(Student.class,this.studentId);
 		 session.delete(stu);
 		 transaction.commit();
+		 log.info("Deleting student with ID: " +this.studentId);
 		 session.close();
+		 log.info("Student info has been deleted");
 	 } 
 	public static void main(String[] args) {
 		Student s = new Student("144444", "John", "Doe", "jdoe@utech.edu.jm", "876458741", "123456789" );

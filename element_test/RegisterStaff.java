@@ -1,4 +1,4 @@
-package com.element_test;
+package element_test;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;

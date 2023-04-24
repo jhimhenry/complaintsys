@@ -5,11 +5,16 @@ import java.sql.DriverManager;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 public class DBConnection {
 	
 static String url = "";//url to connect to our database
 	
 	private static Connection connect = null;
+	
+	public static final Logger log = LogManager.getLogger(DBConnection.class);
 	
 	public static Connection getDatabaseConnection()
 	{
@@ -24,6 +29,7 @@ static String url = "";//url to connect to our database
 	catch(Exception e)
 	{
 		e.printStackTrace();
+		log.error("Connection error occurring", e);
 	}
 		return connect;
 	}

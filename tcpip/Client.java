@@ -28,6 +28,17 @@ public class Client {
             e.printStackTrace();
         }
     }
+    
+    public void closeConnection() {
+        try {
+            objOs.close();
+            obIs.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void configureStreams() throws IOException {
         obIs = new ObjectInputStream(socket.getInputStream());
         try {
@@ -47,10 +58,25 @@ public class Client {
 
     }
     
-    public void sendQuery(Complaints complaintObj) {
-        this.action = action;
+    public void sendQuery(Query query) {
         try {
-            objOs.writeObject(complaintObj);
+            objOs.writeObject(query);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void sendComplaint(Complaint comp) {
+        try {
+            objOs.writeObject(comp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void sendStudent(Student stu) {
+        try {
+            objOs.writeObject(stu);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,48 +125,44 @@ public class Client {
 
     public void receiveResponse() {
         try {
-            String response = in.readLine();
-            resultArea.setText(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void closeConnection() {
-        try {
-            objOs.close();
-            obIs.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (action.equalsIgnoreCase("ADD-COMPLAINT")) {
+                Boolean flag = (Boolean) obIs.readObject();
+                if (flag) {
+                    JOptionPane.showMessageDialog(null, "COMPLAINT RECORDED",
+                            "COMPLAINT", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "FAILED TO ADD COMPLAINT",
+                            "COMPLAINT", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } catch (ClassCastException | ClassNotFoundException | IOException ex) {
+            ex.printStackTrace();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        String serverAddress = "localhost";
-        int serverPort = 1234;
 
         Client client = new Client();
     }
 
-    class CreateButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            // Send a CREATE request to the server
-            String name = nameField.getText();
-            int age = Integer.parseInt(ageField.getText());
-            String request = "CREATE " + name + "," + age;
-            sendRequest(request);
-            receiveResponse();
-        }
-    }
-
-    class ReadButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            // Send a READ request to the server
-            String request = "READ";
-            sendRequest(request);
-            receiveResponse();
-        }
-    }
+//    class CreateButtonListener implements ActionListener {
+//        public void actionPerformed(ActionEvent event) {
+//            // Send a CREATE request to the server
+//            String name = nameField.getText();
+//            int age = Integer.parseInt(ageField.getText());
+//            String request = "CREATE " + name + "," + age;
+//            sendRequest(request);
+//            receiveResponse();
+//        }
+//    }
+//
+//    class ReadButtonListener implements ActionListener {
+//        public void actionPerformed(ActionEvent event) {
+//            // Send a READ request to the server
+//            String request = "READ";
+//            sendRequest(request);
+//            receiveResponse();
+//        }
+//    }
 }
 

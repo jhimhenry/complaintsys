@@ -1,7 +1,7 @@
 /**Implemented by Ntini Edwards(1904701)
  * Card layout is used to switch between displays
  * Used to allow user to register/login and access dashboard*/
-package com.element_test;
+package element_test;
 import model.Student;
 import model.Staff;
 import model.Complaint;

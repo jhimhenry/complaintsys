@@ -1,4 +1,4 @@
-package com.element_test;
+package element_test;
 
 import java.awt.Component;
 
