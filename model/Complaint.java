@@ -163,7 +163,7 @@ public class Complaint implements Serializable{
 				.getSessionFactory()
 				.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		Student stu = (Complaint) session.get(Complaint.class,this.//studentId);
+		Student stu = (Student) session.get(Student.class,stu.studentId);
 		session.delete(stu);
 		log.info("Deleting a complaint");
 		transaction.commit();
