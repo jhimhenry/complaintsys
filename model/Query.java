@@ -7,7 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 //import org.hibernate.annotations.Entity;
 
-import com.sun.istack.internal.logging.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import factories.SessionFactoryBuilder;
 import model.Student;
@@ -32,7 +33,7 @@ public class Query implements Serializable{
 	@Column(name="QueryResponser")
 	private String queryResponder;//to be modified, should take staff id
 	
-	public static final Logger log = Logger.getLogger(Query.class);
+	public static final Logger log = LogManager.getLogger(Query.class);
 	 
 	//default constructor
 	public Query() {

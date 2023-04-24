@@ -7,7 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 //import org.hibernate.annotations.Entity;
 
-import com.sun.istack.internal.logging.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import factories.SessionFactoryBuilder;
 import model.Student;
@@ -34,7 +35,7 @@ public class Student implements Serializable{
 	@Column(name="Passowrd")
 	private String studentPw;
 	
-	public static final Logger log = Logger.getLogger(Student.class);
+	public static final Logger log = LogManager.getLogger(Student.class);
 	
 	//default constructor
 	public Student() {

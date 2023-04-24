@@ -7,7 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 //import org.hibernate.annotations.Entity;
 
-import com.sun.istack.internal.logging.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import factories.SessionFactoryBuilder;
 import model.Student;
@@ -33,7 +34,7 @@ public class Complaint implements Serializable{
 	@Column(name="CompResponder")
 	private String compResponder;//to be modified, should take staff id
 	
-	public static final Logger log = Logger.getLogger(Complaint.class);
+	public static final Logger log = LogManager.getLogger(Complaint.class);
 	
 	//default constructor
 	public Complaint() {
@@ -117,27 +118,27 @@ public class Complaint implements Serializable{
 		session.close();
 	}
 	
-	public void update()
-	{
-		Session session = 
-				SessionFactoryBuilder
-				.getSessionFactory()
-				.getCurrentSession();
-		
-		Transaction transaction = session.beginTransaction();
-		Complaint complaint = (Complaint) session.get(Complaint.class, this.co);
-
-     complaint.setCompDetails(this.compDetails);
-	 complaint.setCompResDate(this.compResDate);
-	 complaint.setCompResolved(this.compResolved);
-	 complaint.setCompResponder(this.compResponder);
-
-		
-		session.update(complaint);
-		transaction.commit();
-		log.info("Updating a complaint");
-		session.close();
-	}
+//	public void update()
+//	{
+//		Session session = 
+//				SessionFactoryBuilder
+//				.getSessionFactory()
+//				.getCurrentSession();
+//		
+//		Transaction transaction = session.beginTransaction();
+//		Complaint complaint = (Complaint) session.get(Complaint.class, this.co);
+//
+//     complaint.setCompDetails(this.compDetails);
+//	 complaint.setCompResDate(this.compResDate);
+//	 complaint.setCompResolved(this.compResolved);
+//	 complaint.setCompResponder(this.compResponder);
+//
+//		
+//		session.update(complaint);
+//		transaction.commit();
+//		log.info("Updating a complaint");
+//		session.close();
+//	}
 	
 	@SuppressWarnings("unchecked")
    public List<Complaint> readAll()
@@ -156,19 +157,19 @@ public class Complaint implements Serializable{
 		
 		return complaintList;
 	}
-	public void delete()
-	{
-		Session session = 
-				SessionFactoryBuilder
-				.getSessionFactory()
-				.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		Student stu = (Student) session.get(Student.class,stu.studentId);
-		session.delete(stu);
-		log.info("Deleting a complaint");
-		transaction.commit();
-		session.close();
-	} 
+//	public void delete() //SHOULD BE CHANGED TO RESPONSE
+//	{
+//		Session session = 
+//				SessionFactoryBuilder
+//				.getSessionFactory()
+//				.getCurrentSession();
+//		Transaction transaction = session.beginTransaction();
+//		Student stu = (Student) session.get(Student.class,stu.studentId);
+//		session.delete(stu);
+//		log.info("Deleting a complaint");
+//		transaction.commit();
+//		session.close();
+//	} 
 	
 	public static void main(String[] args) {
 		Complaint c = new Complaint("Blank timetable", "I see nothing", true, "March 4, 2023", "789624");

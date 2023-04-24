@@ -10,7 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.Entity;
 
-import com.sun.istack.internal.logging.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import factories.SessionFactoryBuilder;
 
@@ -33,7 +34,7 @@ public class Staff implements Serializable{
 	@Column (name="Postion")
 	private String position;
 	
-	public static final Logger log = Logger.getLogger(Staff.class);
+	public static final Logger log = LogManager.getLogger(Staff.class);
 	
 	//default constructor
 	public Staff() {
