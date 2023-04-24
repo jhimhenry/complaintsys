@@ -1,28 +1,65 @@
 package tcpip;
 
-
- 
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
+import model.Complaint;
+import model.Query;
+import model.Staff;
+import model.Student;
 
-public class client {
+public class Client {
     private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
+    private ObjectOutputStream objOs;
+    private ObjectInputStream obIs;
+    private String action;
     private JFrame frame;
     private JTextField nameField;
     private JTextField ageField;
     private JTextArea resultArea;
+    
+    private void createConnection() {
+        try {
+            socket = new Socket("127.0.0.1", 8888);
 
-    public Client(String serverAddress, int serverPort) throws Exception {
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    private void configureStreams() throws IOException {
+        obIs = new ObjectInputStream(socket.getInputStream());
+        try {
+            objOs = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void sendAction(String action) {
+        this.action = action;
+        try {
+            objOs.writeObject(action);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    public void sendQuery(Complaints complaintObj) {
+        this.action = action;
+        try {
+            objOs.writeObject(complaintObj);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Client() throws Exception {
         // Connect to the server
-        socket = new Socket(serverAddress, serverPort);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
+    	this.createConnection();
+    	this.configureStreams();
 
         // Create the GUI
         frame = new JFrame("Client");
@@ -69,8 +106,10 @@ public class client {
         }
     }
 
-    public void close() {
+    public void closeConnection() {
         try {
+            objOs.close();
+            obIs.close();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,7 +120,7 @@ public class client {
         String serverAddress = "localhost";
         int serverPort = 1234;
 
-        Client client = new Client(serverAddress, serverPort);
+        Client client = new Client();
     }
 
     class CreateButtonListener implements ActionListener {
@@ -105,5 +144,3 @@ public class client {
     }
 }
 
-    
-}
