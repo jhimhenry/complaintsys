@@ -1,5 +1,5 @@
 /**Implemented by Ntini Edwards (1904701)*/
-package com.element_test;
+package element_test;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
