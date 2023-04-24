@@ -10,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.Entity;
 
+import com.sun.istack.internal.logging.Logger;
+
 import factories.SessionFactoryBuilder;
 
 
@@ -30,6 +32,8 @@ public class Staff implements Serializable{
 	private String staffPw;
 	@Column (name="Postion")
 	private String position;
+	
+	public static final Logger log = Logger.getLogger(Staff.class);
 	
 	//default constructor
 	public Staff() {
@@ -90,7 +94,9 @@ public class Staff implements Serializable{
 		staff.setStaffPw(staffPw);
 		session.update(staff);
 		transaction.commit();
+		log.info("Updating staff member with ID: " +this.staffId);
 		session.close();
+		log.info("Staff member's info has been updated");
 	}
 		 @SuppressWarnings("unchecked")
 			public List<Staff> readAll()
@@ -104,6 +110,7 @@ public class Staff implements Serializable{
 				 staffList = (List<Staff>) session.createQuery("FROM Staff")
 						 .getResultList();
 				 transaction.commit();
+				 log.info("Listing all staff members");
 				 session.close();
 				 
 				 return staffList;
@@ -118,7 +125,9 @@ public class Staff implements Serializable{
 				 Staff staff= (Staff) session.get(Staff.class,this.staffId);
 				 session.delete(staff);
 				 transaction.commit();
+				 log.info("Deleting staff member with ID: " + this.staffId);
 				 session.close();
+				 log.info("Staff member's info has been deleted");
 			 } 
 	
 	
