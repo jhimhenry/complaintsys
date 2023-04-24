@@ -3,11 +3,13 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import tcpip.Client;
 
 
 public class LiveChat extends JFrame {
@@ -22,7 +24,7 @@ public class LiveChat extends JFrame {
     public LiveChat(String serverAddress, int serverPort)throws Exception  {
     	
     	  socket = new Socket(serverAddress, serverPort);
-	       in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	      in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	      out = new PrintWriter(socket.getOutputStream(), true);
     	
         setTitle("Live Chat");
@@ -36,7 +38,7 @@ public class LiveChat extends JFrame {
         JScrollPane chatScrollPane = new JScrollPane(chatArea);
         messageField = new JTextField();
         sendButton = new JButton("Send");
-        sendButton.addActionListener(new SendButtonListener());
+        //sendButton.addActionListener(new SendButtonListener());
 
 
         // Set up the layout
@@ -57,12 +59,12 @@ public class LiveChat extends JFrame {
         liveChat.setVisible(true);
     }
 
- class SendButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-      
-            sendRequest(request);
-            receiveResponse();
-        }
-    }
+//    class SendButtonListener implements ActionListener {
+//        public void actionPerformed(ActionEventevent e) {
+//      
+//            sendRequest(request);
+//            receiveResponse();
+//        }
+//    }
     
 }

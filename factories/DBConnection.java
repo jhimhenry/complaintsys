@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 
 public class DBConnection {
 	
-static String url = "";//url to connect to our database
+static String url = "jdbc:mysql://localhost:3306/complaint_and_query";//url to connect to our database
 	
 	private static Connection connect = null;
 	
